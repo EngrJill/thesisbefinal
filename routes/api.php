@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\UserDetails;
+use App\Models\UserAppointmentDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,5 +46,36 @@ Route::post('/user_details', function() {
         'appointmentEnd' => request('appointmentEnd'),
         'placeAppointment' => request('placeAppointment'),
         'purposeAppointment' => request('purposeAppointment')
+    ]);
+});
+
+Route::get('/user_appointment_details', function() {
+    return UserAppointmentDetails::all();
+});
+
+Route::post('/user_appointment_details', function() {
+
+    request()->validate([
+        'name' => 'required',
+        'address' => 'required',
+        'phoneNumber' => 'required',
+        'email' => 'required',
+        'appointmentStart' => 'required',
+        'appointmentEnd' => 'required',
+        'placeAppointment' => 'required',
+        'purposeAppointment' => 'required',
+        'qrCode' => 'required'
+    ]);
+
+    return UserAppointmentDetails::create([
+        'name' => request('name'),
+        'address' => request('address'),
+        'phoneNumber' => request('phoneNumber'),
+        'email' => request('email'),
+        'appointmentStart' => request('appointmentStart'),
+        'appointmentEnd' => request('appointmentEnd'),
+        'placeAppointment' => request('placeAppointment'),
+        'purposeAppointment' => request('purposeAppointment'),
+        'qrCode' => request('qrCode')
     ]);
 });
