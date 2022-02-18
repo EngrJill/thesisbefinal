@@ -49,8 +49,14 @@ Route::post('/user_details', function() {
     ]);
 });
 
+Route::get('/');
+
 Route::get('/user_appointment_details', function() {
     return UserAppointmentDetails::all();
+});
+
+Route::get('/user/{appointmentStart}', function (Request $appointmentStart, $id) {
+    return 'User '.$id;
 });
 
 Route::post('/user_appointment_details', function() {

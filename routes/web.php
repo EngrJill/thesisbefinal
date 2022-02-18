@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\UserAppointmentDetails;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $result = QueryBuilder::for(UserAppointmentDetails::class)
+        -> allowedFilters(['appointmentStart','name'])
+        -> get();
+
+    return $result;
 });
+
