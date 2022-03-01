@@ -15,11 +15,19 @@ use Spatie\QueryBuilder\QueryBuilder;
 |
 */
 
-Route::get('/', function () {
-    $result = QueryBuilder::for(UserAppointmentDetails::class)
-        -> allowedFilters(['appointmentStart','name'])
-        -> get();
+Route::get('/yow', function () {
+    return "Hello World";
+});
 
-    return $result;
+
+Route::group(['middleware' => ['IPCheck']], function () {
+
+    Route::get('/', function () {
+        $result = QueryBuilder::for(UserAppointmentDetails::class)
+            -> allowedFilters(['appointmentStart','name'])
+            -> get();
+        return $result;
+    });
+
 });
 

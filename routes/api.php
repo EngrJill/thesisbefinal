@@ -20,68 +20,71 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user_details', function() {
-    return UserDetails::all();
-});
+Route::group(['middleware' => ['IPCheck']], function () {
 
-Route::post('/user_details', function() {
+    Route::get('/user_details', function() {
+        return UserDetails::all();
+    });
 
-    request()->validate([
-        'name' => 'required',
-        'address' => 'required',
-        'phoneNumber' => 'required',
-        'email' => 'required',
-        'appointmentStart' => 'required',
-        'appointmentEnd' => 'required',
-        'placeAppointment' => 'required',
-        'purposeAppointment' => 'required'
-    ]);
+    Route::post('/user_details', function() {
 
-    return UserDetails::create([
-        'name' => request('name'),
-        'address' => request('address'),
-        'phoneNumber' => request('phoneNumber'),
-        'email' => request('email'),
-        'appointmentStart' => request('appointmentStart'),
-        'appointmentEnd' => request('appointmentEnd'),
-        'placeAppointment' => request('placeAppointment'),
-        'purposeAppointment' => request('purposeAppointment')
-    ]);
-});
+        request()->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phoneNumber' => 'required',
+            'email' => 'required',
+            'appointmentStart' => 'required',
+            'appointmentEnd' => 'required',
+            'placeAppointment' => 'required',
+            'purposeAppointment' => 'required'
+        ]);
 
-Route::get('/');
+        return UserDetails::create([
+            'name' => request('name'),
+            'address' => request('address'),
+            'phoneNumber' => request('phoneNumber'),
+            'email' => request('email'),
+            'appointmentStart' => request('appointmentStart'),
+            'appointmentEnd' => request('appointmentEnd'),
+            'placeAppointment' => request('placeAppointment'),
+            'purposeAppointment' => request('purposeAppointment')
+        ]);
+    });
 
-Route::get('/user_appointment_details', function() {
-    return UserAppointmentDetails::all();
-});
+    Route::get('/');
 
-Route::get('/user/{appointmentStart}', function (Request $appointmentStart, $id) {
-    return 'User '.$id;
-});
+    Route::get('/user_appointment_details', function() {
+        return UserAppointmentDetails::all();
+    });
 
-Route::post('/user_appointment_details', function() {
+    Route::get('/user/{appointmentStart}', function (Request $appointmentStart, $id) {
+        return 'User '.$id;
+    });
 
-    request()->validate([
-        'name' => 'required',
-        'address' => 'required',
-        'phoneNumber' => 'required',
-        'email' => 'required',
-        'appointmentStart' => 'required',
-        'appointmentEnd' => 'required',
-        'placeAppointment' => 'required',
-        'purposeAppointment' => 'required',
-        'qrCode' => 'required'
-    ]);
+    Route::post('/user_appointment_details', function() {
 
-    return UserAppointmentDetails::create([
-        'name' => request('name'),
-        'address' => request('address'),
-        'phoneNumber' => request('phoneNumber'),
-        'email' => request('email'),
-        'appointmentStart' => request('appointmentStart'),
-        'appointmentEnd' => request('appointmentEnd'),
-        'placeAppointment' => request('placeAppointment'),
-        'purposeAppointment' => request('purposeAppointment'),
-        'qrCode' => request('qrCode')
-    ]);
+        request()->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phoneNumber' => 'required',
+            'email' => 'required',
+            'appointmentStart' => 'required',
+            'appointmentEnd' => 'required',
+            'placeAppointment' => 'required',
+            'purposeAppointment' => 'required',
+            'qrCode' => 'required'
+        ]);
+
+        return UserAppointmentDetails::create([
+            'name' => request('name'),
+            'address' => request('address'),
+            'phoneNumber' => request('phoneNumber'),
+            'email' => request('email'),
+            'appointmentStart' => request('appointmentStart'),
+            'appointmentEnd' => request('appointmentEnd'),
+            'placeAppointment' => request('placeAppointment'),
+            'purposeAppointment' => request('purposeAppointment'),
+            'qrCode' => request('qrCode')
+        ]);
+    });
 });
