@@ -2,6 +2,8 @@
 
 use App\Models\UserDetails;
 use App\Models\UserAppointmentDetails;
+use App\Models\QRandTemperature;
+use App\Http\Controllers\ProgramController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +27,13 @@ Route::group(['middleware' => ['IPCheck']], function () {
     Route::get('/user_details', function() {
         return UserDetails::all();
     });
+
+
+    Route::get('/access', function() {
+        return QRandTemperature::all();
+    });
+
+    Route::put('/access/update', [ProgramController::class, 'updateById']);
 
     Route::post('/user_details', function() {
 
