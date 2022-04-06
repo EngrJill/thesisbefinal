@@ -3,6 +3,7 @@
 use App\Models\UserDetails;
 use App\Models\UserAppointmentDetails;
 use App\Models\QRandTemperature;
+use App\Models\entries;
 use App\Http\Controllers\ProgramController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,21 @@ Route::group(['middleware' => ['IPCheck']], function () {
             'appointmentEnd' => request('appointmentEnd'),
             'placeAppointment' => request('placeAppointment'),
             'purposeAppointment' => request('purposeAppointment')
+        ]);
+    });
+
+    Route::post('/entries', function() {
+
+        request()->validate([
+            'date' => 'required',
+            'QRentries' => 'required',
+            'TempEntries' => 'required'
+        ]);
+
+        return entries::create([
+            'date' => request('date'),
+            'QRentries' => request('QRentries'),
+            'TempEntries' => request('TempEntries'),
         ]);
     });
 
